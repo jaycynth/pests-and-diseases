@@ -30,6 +30,7 @@
             android:id="@+id/password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText

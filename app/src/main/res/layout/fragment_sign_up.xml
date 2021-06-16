@@ -14,17 +14,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:textSize="@dimen/text_size_16sp"
-            android:fontFamily="@font/source_sans_pro_semibold"
             android:layout_marginBottom="@dimen/margin_16dp"
-            android:textStyle="bold"/>
+            android:fontFamily="@font/source_sans_pro_semibold"
+            android:text="@string/title"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="bold" />
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -39,6 +40,7 @@
             android:id="@+id/location_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +55,7 @@
             android:id="@+id/password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
