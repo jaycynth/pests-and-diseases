@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">adchakathon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_solution">Get Solution</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="diagnose">Diagnose</string>
+</resources>
