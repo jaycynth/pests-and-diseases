@@ -63,16 +63,6 @@ dependencies {
     implementation(AppLibs.appLibraries)
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlinVersion"]}")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("org.tensorflow:tensorflow-lite-support:0.1.0-rc1")
-    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1")
-    // CameraX core library using camera2 implementation
-    implementation ("androidx.camera:camera-camera2:1.1.0-alpha05")
-    implementation ("androidx.camera:camera-lifecycle:1.1.0-alpha05")
-    implementation ("androidx.camera:camera-view:1.0.0-alpha25")
-    implementation ("androidx.activity:activity-ktx:1.2.3")
-    implementation("androidx.appcompat:appcompat:1.3.0")
-    implementation ("pub.devrel:easypermissions:3.0.0")
-
 
     kapt(AppLibs.kaptLibraries)
     //test libs

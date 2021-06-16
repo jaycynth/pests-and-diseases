@@ -11,6 +11,16 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textSize="@dimen/text_size_16sp"
+            android:fontFamily="@font/source_sans_pro_semibold"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:textStyle="bold"/>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_layout"
             android:layout_width="match_parent"
@@ -21,10 +31,23 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Username"
+                android:hint="Names"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/location_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Location"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_layout"
@@ -45,7 +68,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_8dp"
-            android:text="SIGN IN" />
+            android:text="SIGN UP" />
     </LinearLayout>
 
 

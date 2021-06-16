@@ -29,7 +29,7 @@ object BuildPlugins {
 
 object AppLibs {
     private const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0"
-    private const val appcompat = "androidx.appcompat:appcompat:1.2.0"
+    private const val appcompat = "androidx.appcompat:appcompat:1.3.0"
     private const val materialUI = "com.google.android.material:material:1.3.0"
     private const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     private const val androidXlegacy = "androidx.legacy:legacy-support-v4:1.0.0"
@@ -65,6 +65,15 @@ object AppLibs {
 
     private const val kotlinDl =  "org.jetbrains.kotlinx:kotlin-deeplearning-api:0.2.0"
 
+    private const val tensorflowlite = "org.tensorflow:tensorflow-lite-support:0.1.0-rc1"
+    private const val tensorflowMetadata = "org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1"
+    // CameraX core library using camera2 implementation
+    private const val camera2 = "androidx.camera:camera-camera2:1.1.0-alpha05"
+    private const val cameraLifecycle = "androidx.camera:camera-lifecycle:1.1.0-alpha05"
+    private const val cameraView =  "androidx.camera:camera-view:1.0.0-alpha25"
+    private const val actvityKtx=  "androidx.activity:activity-ktx:1.2.3"
+    private const val easyPermissions =  "pub.devrel:easypermissions:3.0.0"
+
 
     val kaptLibraries = arrayListOf<String>().apply {
         add(hiltAndroidCompiler)
@@ -94,6 +103,13 @@ object AppLibs {
         add(retrofit)
         add(retrofitGson)
         add(kotlinDl)
+        add(tensorflowlite)
+        add(tensorflowMetadata)
+        add(actvityKtx)
+        add(camera2)
+        add(cameraLifecycle)
+        add(cameraView)
+        add(easyPermissions)
 
     }
 

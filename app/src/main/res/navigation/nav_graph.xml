@@ -15,4 +15,8 @@
         android:name="com.julie.adchakathon.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.julie.adchakathon.ui.auth.SignUpFragment"
+        android:label="SignUpFragment" />
 </navigation>

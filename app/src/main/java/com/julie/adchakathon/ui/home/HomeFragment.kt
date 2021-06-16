@@ -16,6 +16,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.julie.adchakathon.R
 import com.julie.adchakathon.databinding.FragmentHomeBinding
 import com.julie.adchakathon.ml.Model
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
     lateinit var savedUri: Uri
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,13 +58,17 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val fileName = "labels.txt"
         val inputString = requireActivity().application.assets.open(fileName).bufferedReader()
-                .use { it.readText() }
+            .use { it.readText() }
         labelList = inputString.split("\n")
 
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         startCamera()
+
+        binding.getSolutionBtn.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
+        }
 
         binding.takePhotoBtn.setOnClickListener {
             takePhoto()
@@ -89,10 +94,10 @@ class HomeFragment : Fragment() {
 
         // Create time-stamped output file to hold the image
         val photoFile = File(
-                outputDirectory,
-                SimpleDateFormat(
-                        FILENAME_FORMAT, Locale.US
-                ).format(System.currentTimeMillis()) + ".jpg"
+            outputDirectory,
+            SimpleDateFormat(
+                FILENAME_FORMAT, Locale.US
+            ).format(System.currentTimeMillis()) + ".jpg"
         )
 
         // Create output options object which contains file + metadata
@@ -101,29 +106,29 @@ class HomeFragment : Fragment() {
         // Set up image capture listener, which is triggered after photo has
         // been taken
         imageCapture.takePicture(
-                outputOptions,
-                ContextCompat.getMainExecutor(requireActivity()),
-                object : ImageCapture.OnImageSavedCallback {
-                    override fun onError(exc: ImageCaptureException) {
-                        Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                    }
+            outputOptions,
+            ContextCompat.getMainExecutor(requireActivity()),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                }
 
-                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                        savedUri = Uri.fromFile(photoFile)
-                        val msg = "Photo capture succeeded: $savedUri"
-                        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    savedUri = Uri.fromFile(photoFile)
+                    val msg = "Photo capture succeeded: $savedUri"
+                    Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
 
-                        binding.imageCaptured.setImageURI(savedUri)
+                    binding.imageCaptured.setImageURI(savedUri)
 
-                    }
-                })
+                }
+            })
     }
 
     private fun predict() {
         val model = Model.newInstance(requireActivity())
 
         val `is`: InputStream? =
-                requireActivity().contentResolver.openInputStream(savedUri)
+            requireActivity().contentResolver.openInputStream(savedUri)
         val bitmap = BitmapFactory.decodeStream(`is`)
         `is`?.close()
 
@@ -131,8 +136,14 @@ class HomeFragment : Fragment() {
         val resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
 
         val imageProcessor = ImageProcessor.Builder()
-                .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR)) //.add(new NormalizeOp(127.5f, 127.5f))
-                .build()
+            .add(
+                ResizeOp(
+                    224,
+                    224,
+                    ResizeOp.ResizeMethod.BILINEAR
+                )
+            ) //.add(new NormalizeOp(127.5f, 127.5f))
+            .build()
 
         // Create a TensorImage object. This creates the tensor of the corresponding
         // tensor type (float32 in this case) that the TensorFlow Lite interpreter needs.
@@ -142,7 +153,8 @@ class HomeFragment : Fragment() {
         tImage.load(resized)
         tImage = imageProcessor.process(tImage)
 
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        val inputFeature0 =
+            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
 
         val byteBuffer = tImage.buffer
 
@@ -166,13 +178,13 @@ class HomeFragment : Fragment() {
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             val preview = Preview.Builder()
-                    .build()
-                    .also {
-                        it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-                    }
+                .build()
+                .also {
+                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                }
 
             imageCapture = ImageCapture.Builder()
-                    .build()
+                .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -180,7 +192,7 @@ class HomeFragment : Fragment() {
                 cameraProvider.unbindAll()
 
                 cameraProvider.bindToLifecycle(
-                        viewLifecycleOwner, cameraSelector, preview, imageCapture
+                    viewLifecycleOwner, cameraSelector, preview, imageCapture
                 )
 
 
@@ -202,6 +214,7 @@ class HomeFragment : Fragment() {
                 min = outputs[i]
             }
         }
+        Log.d("Value", outputs[ind].toString())
         return ind
     }
 
