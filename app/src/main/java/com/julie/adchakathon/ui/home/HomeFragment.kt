@@ -1,5 +1,6 @@
 package com.julie.adchakathon.ui.home
 
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -17,6 +18,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.julie.adchakathon.BaseApplication.Companion.prefs
 import com.julie.adchakathon.R
 import com.julie.adchakathon.databinding.FragmentHomeBinding
 import com.julie.adchakathon.ml.Model
@@ -34,6 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
     private lateinit var labelList: List<String>
     lateinit var savedUri: Uri
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -56,6 +60,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (prefs?.getToken() == "null") {
+            findNavController().navigate(R.id.signInFragment)
+        }
+
         val fileName = "labels.txt"
         val inputString = requireActivity().application.assets.open(fileName).bufferedReader()
             .use { it.readText() }
@@ -192,7 +201,7 @@ class HomeFragment : Fragment() {
                 cameraProvider.unbindAll()
 
                 cameraProvider.bindToLifecycle(
-                    viewLifecycleOwner, cameraSelector, preview, imageCapture
+                    this, cameraSelector, preview, imageCapture
                 )
 
 

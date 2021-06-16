@@ -6,4 +6,8 @@
     <string name="take_photo">Take Photo</string>
     <string name="diagnose">Diagnose</string>
     <string name="title"><![CDATA[PESTS & DISEASES]]></string>
+    <string name="sign_up_text">Don\'t have an account yet?</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="sign_in_txt">Already have an Account?</string>
+    <string name="sign_in">SIGN IN</string>
 </resources>

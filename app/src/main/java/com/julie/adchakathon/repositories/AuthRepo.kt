@@ -1,9 +1,17 @@
 package com.julie.adchakathon.repositories
 
-import com.julie.adchakathon.remote.ADCService
+import com.julie.adchakathon.remote.AuthRemoteDataSource
+import com.julie.adchakathon.utils.getOperation
+import okhttp3.RequestBody
 import javax.inject.Inject
 
-class AuthRepo @Inject constructor(val adcService: ADCService) {
+class AuthRepo @Inject constructor(private val authRemoteDataSource: AuthRemoteDataSource){
 
-//    suspend fun register():
+    fun login(requestBody: RequestBody) = getOperation(
+        networkCall = { authRemoteDataSource.login(requestBody) },
+    )
+
+    fun register(requestBody: RequestBody) = getOperation(
+        networkCall = { authRemoteDataSource.register(requestBody) },
+    )
 }

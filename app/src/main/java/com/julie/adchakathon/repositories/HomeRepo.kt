@@ -1,7 +1,7 @@
 package com.julie.adchakathon.repositories
 
-import com.julie.adchakathon.remote.ADCService
+import com.julie.adchakathon.remote.HomeRemoteDataSource
 import javax.inject.Inject
 
-class HomeRepo @Inject constructor(val adcService: ADCService) {
+class HomeRepo @Inject constructor(val homeRemoteDataSource: HomeRemoteDataSource) {
 }

@@ -7,14 +7,13 @@ import pub.devrel.easypermissions.EasyPermissions
 
 object  Constants {
 
-     const val MAX_RESULT_DISPLAY = 4
      const val TAG = "ADCHACKATHON"
      const val REQUEST_CODE_PERMISSIONS = 999
      const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-     const val FLOAT_TYPE_SIZE = 4
-     const val CHANNEL_SIZE = 3
-     const val IMAGE_MEAN = 127.5f
-     const val IMAGE_STD = 127.5f
+     const val SHARED_PREFERENCES_NAME = "sharedPref"
+     const val USER_FIRST_TIME = "USER_FIRST_TIME"
+     const val TOKEN = "TOKEN"
+
 
 
      fun hasLocationPermission(context: Context) =
