@@ -9,14 +9,40 @@
         android:id="@+id/signInFragment"
         android:name="com.julie.adchakathon.ui.auth.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.julie.adchakathon.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addRecordFragment"
+            app:destination="@id/addRecordFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.julie.adchakathon.ui.auth.SignUpFragment"
-        android:label="SignUpFragment" />
+        tools:layout="@layout/fragment_sign_up"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRecordFragment"
+        android:name="com.julie.adchakathon.ui.addRecord.AddRecordFragment"
+        tools:layout="@layout/fragment_add_record"
+        android:label="AddRecordFragment">
+
+        <argument
+            android:name="savedUri"
+            app:argType="string"/>
+    </fragment>
 </navigation>

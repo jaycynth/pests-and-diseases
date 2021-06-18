@@ -13,6 +13,7 @@ object  Constants {
      const val SHARED_PREFERENCES_NAME = "sharedPref"
      const val USER_FIRST_TIME = "USER_FIRST_TIME"
      const val TOKEN = "TOKEN"
+     const val NAMES = "names"
 
 
 

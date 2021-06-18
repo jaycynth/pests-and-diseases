@@ -1,10 +1,11 @@
 package com.julie.adchakathon.ui.home
 
-import android.content.SharedPreferences
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var binding: FragmentHomeBinding
     private lateinit var labelList: List<String>
-    lateinit var savedUri: Uri
+    private var savedUri: Uri? = null
 
 
     override fun onCreateView(
@@ -58,14 +58,57 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (prefs?.getToken() == "null") {
+            findNavController().navigate(R.id.action_homeFragment_to_signInFragment)
+        }
+
+        binding.moreInfo.movementMethod = LinkMovementMethod.getInstance();
+
+
+        binding.titleName.setOnClickListener {
             findNavController().navigate(R.id.signInFragment)
         }
 
-        val fileName = "labels.txt"
+        binding.getSolutionBtn.setOnClickListener {
+            when {
+                binding.solutionText.text.toString().trim() == "healthy" -> {
+                    binding.solutionDescriptionText.text = "Your crop is healthy"
+                }
+                binding.solutionText.text.toString().trim() == "common rust" -> {
+                    binding.solutionDescriptionText.text =
+                        "Use either of the products; garden fungicides,liquid copper or orchid spray"
+                }
+                binding.solutionText.text.toString().trim() == "blight" -> {
+                    binding.solutionDescriptionText.text =
+                        "Prune or stake plants to improve air circulation and reduce fungal problems"
+                }
+                binding.solutionText.text.toString().trim() == "grey leafy spot" -> {
+                    binding.solutionDescriptionText.text =
+                        "Use either of the products; garden fungicides,liquid copper or orchid spray"
+                }
+            }
+        }
+
+        binding.addNewRecordBtn.setOnClickListener {
+            if (savedUri != null) {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToAddRecordFragment(savedUri.toString())
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(
+                    requireActivity(), "Take photo first before proceeding to add",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        binding.titleName.text = "Hello, ${prefs?.getNames()}"
+
+        val fileName = "label.txt"
         val inputString = requireActivity().application.assets.open(fileName).bufferedReader()
             .use { it.readText() }
         labelList = inputString.split("\n")
@@ -75,9 +118,6 @@ class HomeFragment : Fragment() {
 
         startCamera()
 
-        binding.getSolutionBtn.setOnClickListener {
-            findNavController().navigate(R.id.signUpFragment)
-        }
 
         binding.takePhotoBtn.setOnClickListener {
             takePhoto()
@@ -137,7 +177,7 @@ class HomeFragment : Fragment() {
         val model = Model.newInstance(requireActivity())
 
         val `is`: InputStream? =
-            requireActivity().contentResolver.openInputStream(savedUri)
+            savedUri?.let { requireActivity().contentResolver.openInputStream(it) }
         val bitmap = BitmapFactory.decodeStream(`is`)
         `is`?.close()
 
@@ -225,6 +265,12 @@ class HomeFragment : Fragment() {
         }
         Log.d("Value", outputs[ind].toString())
         return ind
+    }
+
+    override fun onStop() {
+        super.onStop()
+        cameraExecutor.shutdown()
+
     }
 
 

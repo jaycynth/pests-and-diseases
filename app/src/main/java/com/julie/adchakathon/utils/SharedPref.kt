@@ -18,4 +18,15 @@ class SharedPrefs(context: Context) {
     fun getToken(): String {
         return prefs.getString(Constants.TOKEN, null).toString()
     }
+
+
+    fun setNames(names: String) {
+        val editor = prefs.edit()
+        editor.putString(Constants.NAMES, names)
+        editor.apply()
+    }
+
+    fun getNames(): String {
+        return prefs.getString(Constants.NAMES, null).toString()
+    }
 }

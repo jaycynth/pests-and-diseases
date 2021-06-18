@@ -14,10 +14,11 @@ import com.julie.adchakathon.R
 import com.julie.adchakathon.data.SignUpRequest
 import com.julie.adchakathon.databinding.FragmentSignUpBinding
 import com.julie.adchakathon.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 
-
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
@@ -25,7 +26,7 @@ class SignUpFragment : Fragment() {
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
@@ -75,12 +76,13 @@ class SignUpFragment : Fragment() {
                 }
                 else -> {
                     val req = SignUpRequest(
-                        firstName = fName,
-                        lastName = lName,
-                        password = password,
-                        location = location,
-                        username = username,
-                        phoneNumber = phone
+                            firstName = fName,
+                            lastName = lName,
+                            password = password,
+                            location = location,
+                            username = username,
+                            phoneNumber = phone,
+                            usertype = "USER"
                     )
                     val jsonElementReq = Gson().toJsonTree(req)
                     val mediaType = "application/json; charset=utf-8".toMediaType()
@@ -90,21 +92,21 @@ class SignUpFragment : Fragment() {
                         when (it.status) {
                             Resource.Status.SUCCESS -> {
                                 Toast.makeText(
-                                    requireActivity(),
-                                    it.data?.message,
-                                    Toast.LENGTH_SHORT
+                                        requireActivity(),
+                                        it.data?.message,
+                                        Toast.LENGTH_SHORT
                                 ).show()
 
                                 findNavController().navigate(R.id.signInFragment)
                             }
                             Resource.Status.ERROR -> {
                                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
-                                    .show()
+                                        .show()
                             }
 
                             Resource.Status.LOADING -> {
                                 Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
-                                    .show()
+                                        .show()
                             }
 
                         }

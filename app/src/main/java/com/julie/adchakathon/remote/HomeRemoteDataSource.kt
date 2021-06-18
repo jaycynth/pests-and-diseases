@@ -5,4 +5,5 @@ import javax.inject.Inject
 class HomeRemoteDataSource @Inject constructor(
     private val adcService: ADCService
 ) : BaseDataSource()  {
+
 }

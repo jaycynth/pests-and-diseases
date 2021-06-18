@@ -61,8 +61,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     //app libs
     implementation(AppLibs.appLibraries)
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlinVersion"]}")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation ("com.github.razir.progressbutton:progressbutton:2.1.0")
+
 
     kapt(AppLibs.kaptLibraries)
     //test libs

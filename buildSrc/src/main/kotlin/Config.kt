@@ -14,7 +14,7 @@ private const val navVersion = "2.3.3"
 private const val coroutineVersion = "1.4.1"
 private const val hiltVersion = "2.28.1-alpha"
 private const val lifecycleVersion = "2.2.0"
-private const val okhttpVersion = "4.9.0"
+private const val okhttpVersion = "4.7.2"
 private const val retrofitVersion = "2.9.0"
 private const val hiltViewModelVersion ="1.0.0-alpha02"
 
@@ -63,11 +63,9 @@ object AppLibs {
     private const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     private const val retrofitGson = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    private const val kotlinDl =  "org.jetbrains.kotlinx:kotlin-deeplearning-api:0.2.0"
-
     private const val tensorflowlite = "org.tensorflow:tensorflow-lite-support:0.1.0-rc1"
     private const val tensorflowMetadata = "org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1"
-    // CameraX core library using camera2 implementation
+
     private const val camera2 = "androidx.camera:camera-camera2:1.1.0-alpha05"
     private const val cameraLifecycle = "androidx.camera:camera-lifecycle:1.1.0-alpha05"
     private const val cameraView =  "androidx.camera:camera-view:1.0.0-alpha25"
@@ -102,7 +100,6 @@ object AppLibs {
         add(okhttpInterceptor)
         add(retrofit)
         add(retrofitGson)
-        add(kotlinDl)
         add(tensorflowlite)
         add(tensorflowMetadata)
         add(actvityKtx)

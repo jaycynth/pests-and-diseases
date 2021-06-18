@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">adchakathon</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="get_solution">Get Solution</string>
     <string name="take_photo">Take Photo</string>
@@ -10,4 +9,10 @@
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in_txt">Already have an Account?</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="add_image">Add Image</string>
+    <string name="submit">Submit</string>
+    <string name="loading">loading.....</string>
+    <string name="applink">For more information on Pests and Diseases
+<a href="https://relaxed-hopper-9a2074.netlify.app/">Get it here</a>
+</string>
 </resources>

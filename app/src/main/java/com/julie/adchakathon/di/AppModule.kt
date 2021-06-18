@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.julie.adchakathon.remote.ADCService
+import com.julie.adchakathon.remote.AddRecordRemoteDataSource
 import com.julie.adchakathon.remote.AuthRemoteDataSource
 import com.julie.adchakathon.remote.HomeRemoteDataSource
+import com.julie.adchakathon.repositories.AddRecordRepo
 import com.julie.adchakathon.repositories.AuthRepo
 import com.julie.adchakathon.repositories.HomeRepo
 import com.julie.adchakathon.utils.Constants.SHARED_PREFERENCES_NAME
@@ -32,21 +34,28 @@ object AppModule {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .build()
+                .addInterceptor(interceptor)
+                .addInterceptor { chain ->
+                    val newRequest = chain.request().newBuilder()
+                            .addHeader("Content-Type", "application/json")
+                            .addHeader("Accept", "application/json")
+                            .build()
+                    chain.proceed(newRequest)
+                }
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build()
     }
 
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson): ADCService = Retrofit.Builder()
-        .baseUrl("https://tranquil-falls-15489.herokuapp.com/api/")
-        .client(provideLogger())
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()
-        .create(ADCService::class.java)
+            .baseUrl("https://tranquil-falls-15489.herokuapp.com/api/")
+            .client(provideLogger())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ADCService::class.java)
 
 
     @Provides
@@ -55,33 +64,43 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAuthRemoteDataSource(adcService: ADCService) =
-        AuthRemoteDataSource(adcService)
+            AuthRemoteDataSource(adcService)
 
     @Singleton
     @Provides
     fun provideHomeRemoteDataSource(adcService: ADCService) =
-        HomeRemoteDataSource(adcService)
+            HomeRemoteDataSource(adcService)
+
+    @Singleton
+    @Provides
+    fun provideAddRecordRemoteDataSource(adcService: ADCService) =
+            AddRecordRemoteDataSource(adcService)
 
 
     @Singleton
     @Provides
     fun provideAuthRepository(authRemoteDataSource: AuthRemoteDataSource) =
-        AuthRepo(authRemoteDataSource)
+            AuthRepo(authRemoteDataSource)
 
     @Singleton
     @Provides
     fun provideHomeRepository(homeRemoteDataSource: HomeRemoteDataSource) =
-        HomeRepo(homeRemoteDataSource)
+            HomeRepo(homeRemoteDataSource)
+
+    @Singleton
+    @Provides
+    fun provideAddRecordRemoteRepository(addRecordRemoteDataSource: AddRecordRemoteDataSource) =
+            AddRecordRepo(addRecordRemoteDataSource)
 
     @Singleton
     @Provides
     fun provideSharedPreferences(@ApplicationContext app: Context) =
-        app.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            app.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     @Singleton
     @Provides
     fun provideFirstTimeToggle(sharedPref: SharedPreferences) =
-        sharedPref.getBoolean(USER_FIRST_TIME, true)
+            sharedPref.getBoolean(USER_FIRST_TIME, true)
 
 
 }

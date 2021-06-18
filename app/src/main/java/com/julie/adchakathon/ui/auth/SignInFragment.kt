@@ -82,6 +82,7 @@ class SignInFragment : Fragment() {
                             Resource.Status.SUCCESS -> {
                                 val token = it.data?.accessToken
                                 token?.let { t -> prefs?.setToken(t) }
+                                prefs?.setNames(username)
                                 findNavController().navigate(R.id.homeFragment)
                             }
                             Resource.Status.ERROR -> {
